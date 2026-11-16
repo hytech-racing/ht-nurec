@@ -1,0 +1,28 @@
+# @package _global_
+# NuRec per-scene 3DGUT reconstruction of a static scene from the HyTech car
+# (2 Blackfly cameras + Ouster OS1-128), for NCore sequences written by mcap_to_ncore.py.
+#
+# copy this directory into NuRec checkout as configs/apps/AV/HyTech/.
+# train with --config-name=configs/apps/AV/HyTech/3dgut_static.yaml dataset.path=data/242/hytech_242.json
+
+defaults:
+  - /apps/AV/_base_3dgut_static.yaml
+  - _self_
+
+dataset:
+  camera_ids:
+    - blackfly_26191748
+    - blackfly_26291609
+  lidar_ids:
+    - lidar_ouster_os1
+  # 1280x1024 images are small next to Waymo (1920x1280, subsample 2) and NVIDIA's rigs (subsample 4),
+  # so train on full-resolution pixels and validate at half resolution.
+  n_val_image_subsample: 2
+  samplers:
+    batch_sampler:
+      camera_pixel_sampler:
+        subsample: 1
+
+system:
+  test:
+    video_fps: 15

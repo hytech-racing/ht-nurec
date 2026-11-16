@@ -1,0 +1,46 @@
+[project]
+name = "hytech-nurec"
+version = "0.1.0"
+description = "Convert drivebrain recordings to NCore V4 for NVIDIA NuRec, and check them"
+readme = "README.md"
+# Matches NVIDIA/NuRec release/26.10 (MODULE.bazel python_version 3.13, deps/python nvidia-ncore==19.8.0)
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "nvidia-ncore==19.8.0",
+    "mcap",
+    "mcap-protobuf-support",
+    "numpy",
+    "opencv-python-headless",
+    "zstandard",
+    "ouster-sdk",
+    "matplotlib",
+    "scipy>=1.18.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "pyright",
+    "ipython",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+pythonVersion = "3.13"
+typeCheckingMode = "basic"
+# quick scripts: don't demand None checks / exact types from loosely typed libraries
+reportOptionalMemberAccess = false
+reportOptionalSubscript = false
+reportOptionalCall = false
+reportAttributeAccessIssue = false
+reportPrivateImportUsage = false
+reportArgumentType = false
+reportCallIssue = false
